@@ -1,29 +1,39 @@
 import { FC, useEffect,useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { getTopMovie } from "../features/movieSlice";
-
-import Navbar from '../components/Navbar';
 import Loader from "../components/Loader";
-
-const Home:FC = () =>{
+import { getTopMovie,getMovies } from "../features/movieSlice";
+import NavBar from "../components/Navbar";
+import Hero from "../components/Hero";
+  
+const Home: FC = () =>{
     const dispatch = useAppDispatch();
-    
 
     useEffect(() => {
+        dispatch(getMovies())
         dispatch(getTopMovie());
     }, [dispatch]);
 
     const { loading, topMovie,error } = useAppSelector((state) => state.movies);
 
+    let myMovie= topMovie?.map(top=>( top.poster_path))
+    let myMovieURL="https://image.tmdb.org/t/p/original"+ myMovie
+
     if(loading){
         return <Loader/>
     }
     
-    return(
-        <div>
-            <Navbar></Navbar>
-        </div>
-    )
-}
+    
 
-export default Home
+    return (
+      <>
+        <NavBar></NavBar>
+        {/* <img src={myMovieURL}></img> */}
+        <Hero image={myMovieURL}>
+
+        </Hero>
+      </>
+    )
+  }
+
+
+  export default Home

@@ -11,6 +11,13 @@ const theme = createTheme({
       main: "#64EEBC",
     //   contrastText: "#616161"
     },
+    warning:{
+        main:"#f44336"
+    },
+    modalButtom:{
+        main: "#979797",
+        contrastText:"#242424"
+    },
   },
   typography: {
     fontFamily: [
@@ -23,11 +30,13 @@ const theme = createTheme({
 declare module '@mui/material/styles' {
   interface Palette {
     custom: Palette['primary'];
+    modalButtom: Palette['primary'];
   }
 
   // allow configuration using `createTheme`
   interface PaletteOptions {
     custom?: PaletteOptions['primary'];
+    modalButtom?: PaletteOptions['primary'];
   }
 }
 
@@ -35,6 +44,7 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     custom: true;
+    modalButtom: true;
   }
 }
 

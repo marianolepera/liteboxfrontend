@@ -1,11 +1,25 @@
-import * as React from 'react';
+import { FC, useEffect,useState } from "react";
+import Box from '@mui/material/Box';
 
-const HeroSection = () =>{
+
+interface HeroInterface {
+    image:string
+  }
+
+const Hero:FC<HeroInterface> = ({image}:HeroInterface) =>{
+
+    const container ={
+        heroContainer:{
+            backgroundImage: `url(${image})`
+        }
+        
+    }
 
     return(
-        <div >
-        </div>
+        <Box sx={container.heroContainer}>
+            <img src={image} ></img>
+        </Box>
     )
 }
 
-export default HeroSection
+export default Hero

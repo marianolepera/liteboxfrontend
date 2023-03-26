@@ -2,7 +2,7 @@ import axios from 'axios'
 import Movie from "../interfaces/movieInterface";
 
 const getMovies = async () => {
-    const response = await axios.get(import.meta.env.API + "/api/peliculas")
+    const response = await axios.get("https://good-plum-squirrel-cuff.cyclic.app/api/peliculas")
     return response.data
   }
 
@@ -35,7 +35,13 @@ const getMovieById = async (movieId:any) => {
   }
 
 const createMovie = async (movieData:Movie) => {
-    const response = await axios.post(import.meta.env.API + "/api/peliculas",movieData)
+    const response = await axios.post("https://good-plum-squirrel-cuff.cyclic.app/api/peliculas",movieData,
+    // {
+    //     headers: {
+    //         "Content-Type": "multipart/form-data",
+    //       }
+    // }
+    )
     return response.data
   }
 

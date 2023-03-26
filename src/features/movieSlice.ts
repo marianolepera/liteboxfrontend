@@ -5,6 +5,7 @@ import moviesService from "./moviesServices";
 interface MovieState  {
     loading: boolean;
     error: string | null;
+    success: boolean;
     movies: Movie[] | null;
     topMovie:Object | null,
     popularMovies: Array<Object> | null
@@ -16,6 +17,7 @@ const initialState: MovieState = {
   error: null,
   movies: null,
   topMovie:null,
+  success: false,
   popularMovies:null,
   movieSelected:null
 }
@@ -86,7 +88,9 @@ export const getMoviebyId = createAsyncThunk(
 const movieSlice = createSlice({
   name: "movies",
   initialState,
-  reducers: {},
+  reducers: {
+    reset: (state) => initialState,
+  },
   extraReducers(builder) {
     builder
       .addCase(createMovie.pending, (state) => {
@@ -94,6 +98,7 @@ const movieSlice = createSlice({
       })
       .addCase(createMovie.fulfilled, (state, action:PayloadAction<Movie>) => {
         state.loading = false;
+        state.success = true;
         state.movies?.push(action.payload)
       })
       .addCase(createMovie.rejected, (state, action:PayloadAction<any>) => {
@@ -114,7 +119,7 @@ const movieSlice = createSlice({
       .addCase(getTopMovie.pending, (state, action) => {
         state.loading = true;
       })
-      .addCase(getTopMovie.fulfilled, (state, action: PayloadAction<Object>) => {
+      .addCase(getTopMovie.fulfilled, (state, action: PayloadAction<any>) => {
         state.loading = false;
         state.topMovie = action.payload;
       })
@@ -146,6 +151,8 @@ const movieSlice = createSlice({
       });
   },
 });
-
+export const { reset } = movieSlice.actions
 
 export default movieSlice.reducer;
+
+export const peliculas = state => state.topMovie

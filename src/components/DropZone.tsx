@@ -99,7 +99,7 @@ const DropZone:FC<DropZoneInterface> =({handleImageReader,progress,resetProgress
                 <Typography sx={{color:"white",float:"right"}} onClick={resetProgress}> CANCELAR</Typography>
             }
             {progress == 100 && 
-                <Typography sx={{color:"white",float:"right"}} >LISTO</Typography>
+                <Typography sx={{color:(theme:any) => theme.palette.custom.main,float:"right"}} >LISTO</Typography>
             }
         </div>
         :

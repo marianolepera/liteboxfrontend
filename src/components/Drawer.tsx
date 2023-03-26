@@ -14,7 +14,6 @@ import { useTheme, useMediaQuery, IconButton } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 
 
-
 type Anchor = 'right';
 
 export default function RightDrawer() {
@@ -37,12 +36,27 @@ export default function RightDrawer() {
     };
 
   const drawerSX={
-    width: 932, 
-        backgroundColor:"secondary.main",color:"secondary.contrastText",opacity:"70%",height:"100%",
-        [theme.breakpoints.down('md')]: {
-            width: '375px',
-        },
+    width: 532, 
+    backgroundColor:"secondary.main",
+    color:"secondary.contrastText",
+    height:"100%",
+    [theme.breakpoints.down('md')]: {width: 375,},
   }
+
+  const listItemSX={
+    fontSize: '22px',
+    // fontWeight:100,
+    lineHeight:"22px",
+    letterSpacing:"4px"
+  }
+
+  const listItemButtonSX={
+    fontSize: '22px',
+    fontWeight:700,
+    lineHeight:"22px",
+    letterSpacing:"4px"
+  }
+  
   const list = (anchor: Anchor) => (
     <Box
       sx={drawerSX}
@@ -50,6 +64,7 @@ export default function RightDrawer() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
+        <Box sx={{marginLeft:4}}>
         <div style={{display:"flex",flexDirection:"row",marginTop:10}}>
             <Box sx={{flexGrow:2}}>
                 <IconButton
@@ -74,16 +89,16 @@ export default function RightDrawer() {
             </Box>
         </div>
       <List>
-        {['INICIO', 'SERIES', 'PELICULAS', 'AGREGADAS RECIENMENTE','POPULARES','MIS PELICULAS','MI LISTA'].map((text, index) => (
+        {['INICIO', 'SERIES', 'PELICULAS', 'AGREGADAS  RECIENTEMENTE','POPULARES','MIS PELICULAS','MI LISTA'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
-              <ListItemText primary={text} />
+              <ListItemText primaryTypographyProps={listItemSX} primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
       <ListItemButton>
-              <ListItemText primary="+ AGREGAR PELICULA" />
+              <ListItemText  primaryTypographyProps={listItemButtonSX}  primary="+ AGREGAR PELICULA" />
       </ListItemButton>
       <List>
         {['CERRAR SESION'].map((text, index) => (
@@ -94,7 +109,7 @@ export default function RightDrawer() {
           </ListItem>
         ))}
       </List>
-
+      </Box>
     </Box>
   );
 

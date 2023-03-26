@@ -154,5 +154,3 @@ const movieSlice = createSlice({
 export const { reset } = movieSlice.actions
 
 export default movieSlice.reducer;
-
-export const peliculas = state => state.topMovie

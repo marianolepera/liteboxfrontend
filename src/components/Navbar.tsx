@@ -57,8 +57,8 @@ function Header() {
   }
 
   return (
-    <AppBar sx={{boxShadow:"none"}} position="static">
-      <Container maxWidth="xl">
+    <AppBar sx={{boxShadow:"none",background: "transparent"}} position="static">
+      <Container maxWidth="xl" >
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1,display: { xs: 'none', md: 'flex' }}}>
             <Typography
@@ -74,7 +74,7 @@ function Header() {
             <Button 
                 sx={addMovieSX} 
                 style={{marginLeft:30}}
-                variant="outlined" 
+                variant="text" 
                 onClick={handleClickOpen}
                 startIcon={<AddIcon />}>
                 AGREGAR PELICULA

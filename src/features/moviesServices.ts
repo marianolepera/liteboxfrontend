@@ -10,7 +10,7 @@ const getTopMovie = async () => {
     const {data} = await axios.get('https://api.themoviedb.org/3/movie/now_playing?api_key=6f26fd536dd6192ec8a57e94141f8b20')
     try {
         const topMovie = data.results.sort(() => 0.5 - Math.random()).slice(0, 1);
-        return topMovie
+        return topMovie[0]
     } catch (error:any) {
         return error.message
     }

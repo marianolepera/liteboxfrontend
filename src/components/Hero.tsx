@@ -2,19 +2,18 @@ import { FC, useEffect,useState } from "react";
 import Box from '@mui/material/Box';
 import { Grid, Typography } from "@mui/material";
 import MiniCard from "./MiniCard";
+import Movie from "../interfaces/movieInterface";
 
 
 
 interface HeroInterface {
-    movies: Array<Object>,
-    popularMovies: Array<Object>
+    movies: Array<Movie>,
+    popularMovies: Array<Movie>
   }
 
   
 const Hero:FC<HeroInterface>= ({movies,popularMovies}:HeroInterface) =>{
   
-    console.log("movies",movies)
-    console.log("popular movies",popularMovies)
     const verSX={
         fontSize:"18px",
         lineHeight:"18px",
@@ -25,14 +24,14 @@ const Hero:FC<HeroInterface>= ({movies,popularMovies}:HeroInterface) =>{
 
 
     return(
-        <Box>
-            <Grid container spacing={3}>
+        <Box sx={{marginTop:4}}>
+            <Grid container >
                 <Grid item  xs={12} md={10}></Grid>
                 <Grid item xs={12} md={2}>
                     <Grid container direction="column">
                         <Typography sx={verSX}>VER POPULARES</Typography>
                         {popularMovies?.map(popular=>(
-                            <div key={popular.id}>
+                            <div key={popular?.id}>
                                  <MiniCard popular={popular}></MiniCard>
                             </div>
                         ))}

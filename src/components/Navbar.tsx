@@ -86,7 +86,7 @@ function Header() {
           </Box>
           <Box sx={{ flexGrow: 0,display:"flex" }}>
             <Box sx={{ display: { xs: 'none', md: 'flex' }}}>
-              <RightDrawer />
+              <RightDrawer handleClickOpen={handleClickOpen}/>
               <IconButton 
                 size="large"
                 color="inherit">
@@ -103,7 +103,7 @@ function Header() {
 
           {/* MOBILE  VIEW STARTS */}
           <Box sx={{  flexGrow:1,display: { xs: 'flex', md: 'none' } }}>
-          <RightDrawer />
+          <RightDrawer handleClickOpen={handleClickOpen}/>
           </Box>
           <Box sx={{flexGrow:1,display: { xs: 'flex', md: 'none' } }}>
             <Typography

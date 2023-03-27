@@ -89,7 +89,10 @@ const movieSlice = createSlice({
   name: "movies",
   initialState,
   reducers: {
-    reset: (state) => initialState,
+    reset: (state) => {
+      state.error = null;
+      state.success = false
+    },
   },
   extraReducers(builder) {
     builder

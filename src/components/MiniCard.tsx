@@ -1,32 +1,84 @@
-import * as React from 'react';
+import { FC, useEffect,useState } from "react";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Movie from "../interfaces/movieInterface";
+import { Box } from "@mui/material";
 
-export default function MiniCard() {
+
+interface miniCardInterface {
+  popular: Movie,
+}
+
+
+
+const MiniCard:FC<miniCardInterface> = ({popular}:miniCardInterface) =>{
+
+  let popularMovieURL="https://image.tmdb.org/t/p/w500"+ popular?.backdrop_path
+
+  const cardSX={
+    width: 220,
+    height:152,
+    marginTop:2,
+    marginBottom:1,
+    position:"relative",
+    // backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`,
+
+    // overflow:"hidden"
+  }
+
+  const miniCardImageSX={
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition:"center center",
+    backgroundSize:"100% 100%",
+    width:"100%",
+    maxWidth:"auto",
+    maxHeight:"100%",
+    // display:"block"
+    }
+  const titleSX={
+    fontSize:"16px",
+    letterSpacing:"4px",
+    color:"white",
+    textAlign:"center",
+  }
   return (
-    <Card sx={{ width: 220,height:100 }}>
-      <CardMedia
-        sx={{ maxHeight: 220,maxWidth:180 }}
-        image="../../public/image5.svg"
-        title="green iguana"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Lizard
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
+      <Card sx={cardSX}>
+        <CardMedia  sx={miniCardImageSX} image={popularMovieURL} >
+          <CardContent sx={{backgroundColor:"transparent",position:"relative"}} >
+          <Typography sx={titleSX} style={{display:"flex",alignItems:"flex-end",}} >
+              {popular?.original_title}
+            </Typography>
+            {/* <Typography sx={{color:"white"}} gutterBottom >
+              {popular?.vote_average}
+            </Typography>
+            <Typography sx={{color:"white"}} variant="body2" color="text.secondary">
+              {popular?.release_date ? popular?.release_date.substring(0,4) : null}
+            </Typography>  */}
+          </CardContent>
+        </CardMedia>
+        {/* <Box sx={miniCardImageSX}>
+
+        </Box> */}
+        {/* <img src={popularMovieURL} style={miniCardImageSX}>
+        </img>
+        <Box sx={{position:"relative",zIndex:3}}> 
+            <Typography sx={{color:"white"}} gutterBottom >
+              {popular?.original_title}
+            </Typography>
+            <Typography sx={{color:"white"}} gutterBottom >
+              {popular?.vote_average}
+            </Typography>
+            <Typography sx={{color:"white"}} variant="body2" color="text.secondary">
+              {popular?.release_date ? popular?.release_date.substring(0,4) : null}
+            </Typography> 
+        </Box> */}
+      </Card>
   );
 }
+
+export default MiniCard

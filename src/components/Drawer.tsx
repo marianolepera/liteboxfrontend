@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FC, useEffect,useState,Fragment } from "react";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -14,10 +14,14 @@ import { useTheme, useMediaQuery, IconButton } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 
 
+interface rightDrawerInterface {
+  handleClickOpen: () =>void
+}
+
 type Anchor = 'right';
 
-export default function RightDrawer() {
-  const [state, setState] = React.useState({
+const RightDrawer:FC<rightDrawerInterface> =({handleClickOpen}:rightDrawerInterface) => {
+  const [state, setState] = useState({
     right: false,
   });
   const theme = useTheme();
@@ -97,14 +101,14 @@ export default function RightDrawer() {
           </ListItem>
         ))}
       </List>
-      <ListItemButton>
+      <ListItemButton onClick={handleClickOpen}>
               <ListItemText  primaryTypographyProps={listItemButtonSX}  primary="+ AGREGAR PELICULA" />
       </ListItemButton>
       <List>
         {['CERRAR SESION'].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
-              <ListItemText primary={text} />
+              <ListItemText primaryTypographyProps={listItemSX} primary={text} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -116,7 +120,7 @@ export default function RightDrawer() {
   return (
     <div>
       {(['right'] as const).map((anchor) => (
-        <React.Fragment key={anchor}>
+        <Fragment key={anchor}>
              <IconButton
               size="large"
               onClick={toggleDrawer(anchor, true)}
@@ -131,8 +135,10 @@ export default function RightDrawer() {
           >
             {list(anchor)}
           </Drawer>
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );
 }
+
+export default RightDrawer

@@ -10,14 +10,14 @@ import { Box } from "@mui/material";
 
 
 interface miniCardInterface {
-  popular: Movie,
+  movieCard: Movie,
 }
 
 
 
-const MiniCard:FC<miniCardInterface> = ({popular}:miniCardInterface) =>{
+const MiniCard:FC<miniCardInterface> = ({movieCard}:miniCardInterface) =>{
 
-  let popularMovieURL="https://image.tmdb.org/t/p/w500"+ popular?.backdrop_path
+  let MovieCardURL="https://image.tmdb.org/t/p/w500"+ movieCard?.backdrop_path
 
   const cardSX={
     width: 220,
@@ -48,10 +48,10 @@ const MiniCard:FC<miniCardInterface> = ({popular}:miniCardInterface) =>{
   }
   return (
       <Card sx={cardSX}>
-        <CardMedia  sx={miniCardImageSX} image={popularMovieURL} >
+        <CardMedia  sx={miniCardImageSX} image={MovieCardURL} >
           <CardContent sx={{backgroundColor:"transparent",position:"relative"}} >
           <Typography sx={titleSX} style={{display:"flex",alignItems:"flex-end",}} >
-              {popular?.original_title}
+              {movieCard?.original_title}
             </Typography>
             {/* <Typography sx={{color:"white"}} gutterBottom >
               {popular?.vote_average}

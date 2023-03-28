@@ -3,7 +3,8 @@ import Movie from "../interfaces/movieInterface";
 import moviesService from "./moviesServices";
 
 interface MovieState  {
-    loading: boolean;
+    loadingTopMovie: boolean;
+    loadingMovies: boolean;
     error: string | null;
     success: boolean;
     movies: Movie[] | null;
@@ -13,7 +14,8 @@ interface MovieState  {
   }
   
 const initialState: MovieState = {
-  loading: false,
+  loadingTopMovie: false,
+  loadingMovies: false,
   error: null,
   movies: null,
   topMovie:null,
@@ -97,59 +99,59 @@ const movieSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(createMovie.pending, (state) => {
-        state.loading = true;
+        state.loadingMovies = true;
       })
       .addCase(createMovie.fulfilled, (state, action:PayloadAction<Movie>) => {
-        state.loading = false;
+        state.loadingMovies = false;
         state.success = true;
         state.movies?.push(action.payload)
       })
       .addCase(createMovie.rejected, (state, action:PayloadAction<any>) => {
-        state.loading = false;
+        state.loadingMovies = false;
         state.error = action.payload
       })
       .addCase(getMovies.pending, (state, action) => {
-        state.loading = true;
+        state.loadingMovies = true;
       })
       .addCase(getMovies.fulfilled, (state, action: PayloadAction<Movie[]>) => {
-        state.loading = false;
+        state.loadingMovies = false;
         state.movies = action.payload;
       })
       .addCase(getMovies.rejected, (state, action: PayloadAction<any>) => {
-        state.loading = false;
+        state.loadingMovies = false;
         state.error = action.payload;
       })
       .addCase(getTopMovie.pending, (state, action) => {
-        state.loading = true;
+        state.loadingTopMovie = true;
       })
       .addCase(getTopMovie.fulfilled, (state, action: PayloadAction<any>) => {
-        state.loading = false;
+        state.loadingTopMovie = false;
         state.topMovie = action.payload;
       })
       .addCase(getTopMovie.rejected, (state, action: PayloadAction<any>) => {
-        state.loading = false;
+        state.loadingTopMovie = false;
         state.error = action.payload;
       })
       .addCase(getPopularMovies.pending, (state, action) => {
-        state.loading = true;
+        state.loadingMovies = true;
       })
       .addCase(getPopularMovies.fulfilled, (state, action: PayloadAction<any>) => {
-        state.loading = false;
+        state.loadingMovies = false;
         state.popularMovies = action.payload;
       })
       .addCase(getPopularMovies.rejected, (state, action: PayloadAction<any>) => {
-        state.loading = false;
+        state.loadingMovies = false;
         state.error = action.payload;
       })
       .addCase(getMoviebyId.pending, (state, action) => {
-          state.loading = true;
+          state.loadingMovies = true;
         })
       .addCase(getMoviebyId.fulfilled, (state, action: PayloadAction<Movie>) => {
-        state.loading = false;
+        state.loadingMovies = false;
         state.movieSelected = action.payload;
       })
       .addCase(getMoviebyId.rejected, (state, action: PayloadAction<any>) => {
-        state.loading = false;
+        state.loadingMovies = false;
         state.error = action.payload;
       });
   },

@@ -8,12 +8,9 @@ import { Box } from "@mui/material";
   
 const Home: FC = () =>{
     const dispatch = useAppDispatch();
-    const { loading, topMovie,movies,popularMovies,error } = useAppSelector((state) => state.movies);
+    const { loadingTopMovie, topMovie,error } = useAppSelector((state) => state.movies);
     useEffect(() => {
         dispatch(getTopMovie());
-        dispatch(getPopularMovies())
-        dispatch(getMovies())
-        
     }, [dispatch]);
 
     
@@ -31,7 +28,7 @@ const Home: FC = () =>{
         
     }
 
-    if(loading){
+    if(loadingTopMovie){
         return <Loader/>
     }
     
@@ -42,8 +39,8 @@ const Home: FC = () =>{
       <Box sx={container.heroContainer}>
             <NavBar></NavBar>
             <Hero 
-                movies={movies}
-                popularMovies={popularMovies}
+                // movies={movies}
+                // popularMovies={popularMovies}
             // myMovieURL={myMovieURL}
             />
       </Box>

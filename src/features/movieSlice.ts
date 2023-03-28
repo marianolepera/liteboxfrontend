@@ -8,8 +8,8 @@ interface MovieState  {
     error: string | null;
     success: boolean;
     movies: Movie[] | null;
-    topMovie:Object | null,
-    popularMovies: Array<Object> | null
+    topMovie:Movie | null,
+    popularMovies: Movie[] | null
     movieSelected: Movie | null;
   }
   
@@ -124,7 +124,7 @@ const movieSlice = createSlice({
       .addCase(getTopMovie.pending, (state, action) => {
         state.loadingTopMovie = true;
       })
-      .addCase(getTopMovie.fulfilled, (state, action: PayloadAction<any>) => {
+      .addCase(getTopMovie.fulfilled, (state, action: PayloadAction<Movie>) => {
         state.loadingTopMovie = false;
         state.topMovie = action.payload;
       })
@@ -135,7 +135,7 @@ const movieSlice = createSlice({
       .addCase(getPopularMovies.pending, (state, action) => {
         state.loadingMovies = true;
       })
-      .addCase(getPopularMovies.fulfilled, (state, action: PayloadAction<any>) => {
+      .addCase(getPopularMovies.fulfilled, (state, action: PayloadAction<Movie[]>) => {
         state.loadingMovies = false;
         state.popularMovies = action.payload;
       })

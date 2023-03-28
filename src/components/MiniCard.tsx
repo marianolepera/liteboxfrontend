@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Movie from "../interfaces/movieInterface";
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 
 
 interface miniCardInterface {
@@ -18,6 +18,7 @@ interface miniCardInterface {
 const MiniCard:FC<miniCardInterface> = ({movieCard}:miniCardInterface) =>{
 
   let MovieCardURL="https://image.tmdb.org/t/p/w500"+ movieCard?.backdrop_path
+  const theme = useTheme();
 
   const cardSX={
     width: 220,
@@ -25,6 +26,8 @@ const MiniCard:FC<miniCardInterface> = ({movieCard}:miniCardInterface) =>{
     marginTop:2,
     marginBottom:1,
     position:"relative",
+    [theme.breakpoints.down('md')]: {width:"100%",}
+
     // backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`,
 
     // overflow:"hidden"

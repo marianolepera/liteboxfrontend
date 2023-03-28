@@ -24,6 +24,8 @@ const Home: FC = () =>{
             backgroundSize:"100% 100%",
             width:"100%",
             height:"auto",
+            minHeight:"100%",
+            position:"absolute",
         },
         
     }
@@ -38,7 +40,8 @@ const Home: FC = () =>{
     return (
       <Box sx={container.heroContainer}>
             <NavBar></NavBar>
-            <Hero 
+            <Hero
+                topMovie={topMovie} 
                 // movies={movies}
                 // popularMovies={popularMovies}
             // myMovieURL={myMovieURL}

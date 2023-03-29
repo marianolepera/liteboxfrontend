@@ -1,9 +1,9 @@
 import { FC, useEffect,useState } from "react";
-import { FormControl, Grid, MenuItem, Select, Typography,useTheme,Box, styled, Paper, Button } from "@mui/material";
+import { Grid, MenuItem, Select, Typography,useTheme,Box, Button } from "@mui/material";
 import MiniCard from "./MiniCard";
 import { SelectChangeEvent } from '@mui/material/Select';
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { getMovies,getPopularMovies,reset } from "../features/movieSlice";
+import { getMovies,getPopularMovies } from "../features/movieSlice";
 import Loader from "./Loader";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Movie from "../interfaces/movieInterface";
@@ -21,7 +21,6 @@ const Hero:FC<HeroInterface> = ({topMovie}:HeroInterface) =>{
     const dispatch = useAppDispatch();
     const { loadingMovies, popularMovies,movies,error } = useAppSelector((state) => state.movies);
 
-
     const getCategoryOfMovie = () =>{
         if(category == "populares"){
             dispatch(getPopularMovies())
@@ -34,8 +33,6 @@ const Hero:FC<HeroInterface> = ({topMovie}:HeroInterface) =>{
         getCategoryOfMovie()
     }, [category,dispatch]);
   
-    
-
     const handleChangeCategory = (event: SelectChangeEvent) => {
         setCategory(event.target.value as string);
       };
@@ -44,13 +41,6 @@ const Hero:FC<HeroInterface> = ({topMovie}:HeroInterface) =>{
         return <Loader/>
     }
 
-    // const Item = styled(Paper)(({ theme }) => ({
-    //     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    //     ...theme.typography.body2,
-    //     padding: theme.spacing(1),
-    //     textAlign: 'center',
-    //     color: theme.palette.text.secondary,
-    //   }));
     const verSX={
         fontSize:"18px",
         lineHeight:"18px",
@@ -59,13 +49,6 @@ const Hero:FC<HeroInterface> = ({topMovie}:HeroInterface) =>{
         color:"white",
     }
 
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 3
-      };
 
     const gridColumnSX={
        marginTop:50, 
@@ -77,7 +60,6 @@ const Hero:FC<HeroInterface> = ({topMovie}:HeroInterface) =>{
         lineHeight:"24px",
         letterSpacing:"4px",
         color:"white",
-        // [theme.breakpoints.up('lg')]: {paddingLeft: 24,}
     }
 
     const originalLiteFlixSX={
@@ -87,7 +69,6 @@ const Hero:FC<HeroInterface> = ({topMovie}:HeroInterface) =>{
         letterSpacing:"4px",
         color:"white",
         margintRight:20,
-        // [theme.breakpoints.up('lg')]: {paddingLeft: 24,}
     }
 
     const titleTopMovieSX={
@@ -156,12 +137,12 @@ const Hero:FC<HeroInterface> = ({topMovie}:HeroInterface) =>{
                         {/* MOBILE VIEW  STARTS*/}
                         <Box sx={{ display: { xs: 'block', md: 'none', }}}>
                             <Grid item xs={12} sm={12} sx={{textAlign:"center"}}>
-                                <Button sx={buttonPlaySX} style={{width:"70%",marginTop:20}} startIcon={<PlayArrowOutlinedIcon/>}>
+                                <Button sx={buttonPlaySX} style={{width:"60%",marginTop:20}} startIcon={<PlayArrowOutlinedIcon/>}>
                                     REPRODUCIR
                                 </Button>
                             </Grid>
                             <Grid item xs={12} sm={12} sx={{textAlign:"center"}}>
-                                <Button  startIcon={<AddIcon/>} style={{width:"70%",marginTop:10}} sx={miListaSX} variant="outlined">
+                                <Button  startIcon={<AddIcon/>} style={{width:"60%",marginTop:10}} sx={miListaSX} variant="outlined">
                                     MI LISTA
                                 </Button>
                             </Grid>
@@ -199,15 +180,13 @@ const Hero:FC<HeroInterface> = ({topMovie}:HeroInterface) =>{
                             <MenuItem sx={{color:"white"}} value={"peliculas"}>
                                 MIS PELICULAS
                             </MenuItem>
-                            
                         </Select>
                     </Box>
-            
                 {category == "populares" && (
                     <>
                     {popularMovies?.map(movie=>(
-                        <div key={movie?.id}>
-                            <MiniCard movieCard={movie}></MiniCard>
+                        <div  key={movie?.id}>
+                            <MiniCard movieCard={movie} typeMovie={1}></MiniCard>
                         </div>
                     ))}
                     </>
@@ -216,19 +195,12 @@ const Hero:FC<HeroInterface> = ({topMovie}:HeroInterface) =>{
                     <>
                     {movies?.map(movie=>(
                         <div key={movie?.id}>
-                            <MiniCard movieCard={movie}></MiniCard>
+                            <MiniCard movieCard={movie} typeMovie={2}></MiniCard>
                         </div>
                     ))}
                     </>
                 )}
-                    
-                    
-
-                    
-                    
-                    
                 </Grid>
-
             </Grid>
         </Box>
     )

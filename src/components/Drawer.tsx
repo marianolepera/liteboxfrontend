@@ -1,13 +1,11 @@
-import { FC, useEffect,useState,Fragment } from "react";
+import { FC,useState,Fragment } from "react";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
-import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { useTheme, useMediaQuery, IconButton } from '@mui/material';
@@ -49,7 +47,6 @@ const RightDrawer:FC<rightDrawerInterface> =({handleClickOpen}:rightDrawerInterf
 
   const listItemSX={
     fontSize: '22px',
-    // fontWeight:100,
     lineHeight:"22px",
     letterSpacing:"4px"
   }
@@ -58,7 +55,7 @@ const RightDrawer:FC<rightDrawerInterface> =({handleClickOpen}:rightDrawerInterf
     fontSize: '22px',
     fontWeight:700,
     lineHeight:"22px",
-    letterSpacing:"4px"
+    letterSpacing:"4px",
   }
   
   const list = (anchor: Anchor) => (
@@ -101,7 +98,14 @@ const RightDrawer:FC<rightDrawerInterface> =({handleClickOpen}:rightDrawerInterf
           </ListItem>
         ))}
       </List>
-      <ListItemButton onClick={handleClickOpen}>
+      <ListItemButton 
+        sx={{
+          ":hover":{
+          transform: "scale(1.1)",
+          transition: "all 0.45s ease-in-out",
+          cursor: "pointer"
+        }}} 
+        onClick={handleClickOpen}>
               <ListItemText  primaryTypographyProps={listItemButtonSX}  primary="+ AGREGAR PELICULA" />
       </ListItemButton>
       <List>
@@ -122,6 +126,12 @@ const RightDrawer:FC<rightDrawerInterface> =({handleClickOpen}:rightDrawerInterf
       {(['right'] as const).map((anchor) => (
         <Fragment key={anchor}>
              <IconButton
+              sx={{
+                ":hover":{
+                transform: "scale(1.2)",
+                transition: "all 0.45s ease-in-out",
+                cursor: "pointer"
+            }}}
               size="large"
               onClick={toggleDrawer(anchor, true)}
               color="inherit"

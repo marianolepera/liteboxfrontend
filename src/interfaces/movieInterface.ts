@@ -5,6 +5,7 @@ interface Movie {
     vote_average?: string;
     release_date?: string;
     id?: number;
+    title?: string;
 }
 
 

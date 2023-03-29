@@ -95,9 +95,7 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 export default function Modal({open,setOpen}:any) {
   const dispatch = useAppDispatch();
   const { error,success } = useAppSelector((state) => state.movies);
-
   const [progress, setProgress] = React.useState(0);
-  const [onSuccess, setOnSuccess] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
   const [original_title, setOriginalTitle] = React.useState("")
   const [backdrop_path, setBackDropPath] = React.useState('');
@@ -108,13 +106,6 @@ export default function Modal({open,setOpen}:any) {
     setProgress(0)
   };
 
-
-//   React.useEffect(() => {
-//     dispatch(reset())
-//   }, []);
-
-//   const theme = useTheme();
-
   const handleImageReader = (files:any,fileRejected:any) => {
     const fileReader = new FileReader();
     fileReader.onerror = () => {
@@ -123,7 +114,6 @@ export default function Modal({open,setOpen}:any) {
       };
     
     fileReader.onloadstart = (data:ProgressEvent) => {
-        console.log(data)
       if (fileReader.readyState === 1) {
         let valueProgress = data.loaded;
         setProgress(valueProgress);
@@ -134,14 +124,11 @@ export default function Modal({open,setOpen}:any) {
       if (fileReader.readyState === 1) {
         let valueProgress = (data.loaded / data.total) * 50;
         setProgress(valueProgress);
-        // setProgress(valueProgress);
       }
     };
 
     fileReader.onloadend = (data:ProgressEvent) => {
       if (fileReader.readyState === 2) {
-        // let valueProgress = parseInt((data.loaded / data.total) * 100, 10);
-        // setProgress(valueProgress);
         const valueProgress = 50 + (data.loaded / data.total) * 50;
         setProgress(valueProgress);
         setBackDropPath(fileReader.result );
@@ -158,14 +145,10 @@ export default function Modal({open,setOpen}:any) {
 
   const onSubmitMovie = (e: React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
-        // const formData= new FormData()
-        // formData.append("original_title",original_title)
-        // formData.append("backdrop_path",backdrop_path)
         const formMovie:Movie={
             original_title,
             backdrop_path
         }
-        console.log(formMovie)
         dispatch(createMovie(formMovie))
         dispatch(reset())
   }
@@ -193,7 +176,6 @@ export default function Modal({open,setOpen}:any) {
         open={open}
         maxWidth="xl"
       >
-        
         <Box sx={{
             backgroundColor:(theme:any) =>theme.palette.secondary.main,
             height:440}}>
@@ -218,48 +200,46 @@ export default function Modal({open,setOpen}:any) {
                     }
                     { progress == 100 && success && 
                       <>
-                      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                      LITEFLIX
-                      </BootstrapDialogTitle>
-                      <DialogContent sx={{marginTop:7,textAlign:"center"}}>
-                         <Typography sx={{color:"white"}}>¡FELICITACIONES!</Typography>
-                         <Typography sx={{color:"white"}}>{original_title} FUE CORRECTAMENTE SUBIDO</Typography>
-                      </DialogContent>
-                      <DialogActions sx={{justifyContent:"center"}}>
-                          <Button onClick={handleClose} sx={{width:180,marginBottom:4}}  type="submit" variant="contained" color="modalButtom" autoFocus >
-                              IR AL HOME
-                          </Button>
-                      </DialogActions>
+                        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+                        LITEFLIX
+                        </BootstrapDialogTitle>
+                        <DialogContent sx={{marginTop:7,textAlign:"center"}}>
+                          <Typography sx={{color:"white"}}>¡FELICITACIONES!</Typography>
+                          <Typography sx={{color:"white"}}>{original_title} FUE CORRECTAMENTE SUBIDO</Typography>
+                        </DialogContent>
+                        <DialogActions sx={{justifyContent:"center"}}>
+                            <Button onClick={handleClose} sx={{width:180,marginBottom:4}}  type="submit" variant="contained" color="modalButtom" autoFocus >
+                                IR AL HOME
+                            </Button>
+                        </DialogActions>
                      </>
                     }
                     {!error && !success && 
                         <>
-                        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                        AGREGAR PELICULA
-                        </BootstrapDialogTitle>
-                        <DialogContent sx={{marginTop:3}}>
-                        <DropZone handleImageReader={handleImageReader} progress={progress} resetProgress={resetProgress}></DropZone>
-                        <Box sx={{justifyContent:"center",textAlign:"center",alignItems:"center",marginTop:4}}>
-                            <CssTextField   
-                                value={original_title}
-                                onChange={(e) =>setOriginalTitle(e.target.value)}
-                                required
-                                placeholder='titulo'
-                                sx={{input: { color: 'white',borderColor:"white",textAlign:"center"  } }} 
-                                InputLabelProps={{style: { color: 'white' }}}  
-                                id="standard-basic" 
-                                // label="TITULO" 
-                                variant="standard" />
-                        </Box>
-                        </DialogContent>
-                        <DialogActions sx={{justifyContent:"center"}}>
-                            <Button  disabled={validations()} sx={{width:180,marginBottom:4}}  type="submit" variant="contained" color="modalButtom" autoFocus >
-                                SUBIR PELICULA
-                            </Button>
-                        </DialogActions>
+                          <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+                          AGREGAR PELICULA
+                          </BootstrapDialogTitle>
+                          <DialogContent sx={{marginTop:3}}>
+                          <DropZone handleImageReader={handleImageReader} progress={progress} resetProgress={resetProgress}></DropZone>
+                          <Box sx={{justifyContent:"center",textAlign:"center",alignItems:"center",marginTop:4}}>
+                              <CssTextField   
+                                  value={original_title}
+                                  onChange={(e) =>setOriginalTitle(e.target.value)}
+                                  required
+                                  placeholder='titulo'
+                                  sx={{input: { color: 'white',borderColor:"white",textAlign:"center"  } }} 
+                                  InputLabelProps={{style: { color: 'white' }}}  
+                                  id="standard-basic" 
+                                  variant="standard" />
+                          </Box>
+                          </DialogContent>
+                          <DialogActions sx={{justifyContent:"center"}}>
+                              <Button  disabled={validations()} sx={{width:180,marginBottom:4}}  type="submit" variant="contained" color="modalButtom" autoFocus >
+                                  SUBIR PELICULA
+                              </Button>
+                          </DialogActions>
                         </>
                     }
-                   
                 </>
                 :
                 <>
@@ -281,7 +261,6 @@ export default function Modal({open,setOpen}:any) {
                              sx={{input: { color: 'white',borderColor:"white",textAlign:"center"  } }} 
                              InputLabelProps={{style: { color: 'white' }}}  
                              id="standard-basic" 
-                             // label="TITULO" 
                              variant="standard" />
                      </Box>
                      </DialogContent>
@@ -293,30 +272,29 @@ export default function Modal({open,setOpen}:any) {
                     </>
                 :
                     <>
-                    <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    AGREGAR PELICULA
-                    </BootstrapDialogTitle>
-                    <DialogContent sx={{marginTop:3}}>
-                    <DropZone handleImageReader={handleImageReader} resetProgress={resetProgress} progress={progress}></DropZone>
-                    
-                    <Box sx={{justifyContent:"center",textAlign:"center",alignItems:"center",marginTop:4}}>
-                        <CssTextField  
-                            value={original_title}
-                            onChange={(e) =>setOriginalTitle(e.target.value)}
-                            required
-                            placeholder='titulo'
-                            sx={{input: { color: 'white',borderColor:"white",textAlign:"center"  } }} 
-                            InputLabelProps={{style: { color: 'white' }}}  
-                            id="standard-basic" 
-                            // label="TITULO" 
-                            variant="standard" />
-                    </Box>
-                    </DialogContent>
-                    <DialogActions sx={{justifyContent:"center"}}>
-                        <Button  disabled={validations()}  sx={{width:180,marginBottom:4}} type="submit" variant="contained" color="modalButtom" autoFocus onClick={handleClose}>
-                            SUBIR PELICULA
-                        </Button>
-                    </DialogActions>
+                      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+                      AGREGAR PELICULA
+                      </BootstrapDialogTitle>
+                      <DialogContent sx={{marginTop:3}}>
+                      <DropZone handleImageReader={handleImageReader} resetProgress={resetProgress} progress={progress}></DropZone>
+                      <Box sx={{justifyContent:"center",textAlign:"center",alignItems:"center",marginTop:4}}>
+                          <CssTextField  
+                              value={original_title}
+                              onChange={(e) =>setOriginalTitle(e.target.value)}
+                              required
+                              placeholder='titulo'
+                              sx={{input: { color: 'white',borderColor:"white",textAlign:"center"  } }} 
+                              InputLabelProps={{style: { color: 'white' }}}  
+                              id="standard-basic" 
+                              // label="TITULO" 
+                              variant="standard" />
+                      </Box>
+                      </DialogContent>
+                      <DialogActions sx={{justifyContent:"center"}}>
+                          <Button  disabled={validations()}  sx={{width:180,marginBottom:4}} type="submit" variant="contained" color="modalButtom" autoFocus onClick={handleClose}>
+                              SUBIR PELICULA
+                          </Button>
+                      </DialogActions>
                     </>
                 }
                 </>

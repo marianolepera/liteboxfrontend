@@ -1,19 +1,19 @@
-import { FC, useEffect,useState } from "react";
+import { FC, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import Loader from "../components/Loader";
-import { getTopMovie,getMovies,getPopularMovies,reset } from "../features/movieSlice";
+import { getTopMovie } from "../features/movieSlice";
 import NavBar from "../components/Navbar";
 import Hero from "../components/Hero";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
   
 const Home: FC = () =>{
     const dispatch = useAppDispatch();
     const { loadingTopMovie, topMovie,error } = useAppSelector((state) => state.movies);
+
     useEffect(() => {
         dispatch(getTopMovie());
     }, [dispatch]);
 
-    
     let myMovieURL="https://image.tmdb.org/t/p/original"+ topMovie?.poster_path
 
     const container ={
@@ -27,24 +27,19 @@ const Home: FC = () =>{
             minHeight:"100%",
             position:"absolute",
         },
-        
     }
 
     if(loadingTopMovie){
         return <Loader/>
     }
-    
-
-    
-
+    if(error){
+        return <Box> <Typography variant="h1">HUBO UN ERROR AL CARGAR LA IMAGEN</Typography></Box>
+    }
     return (
       <Box sx={container.heroContainer}>
             <NavBar></NavBar>
             <Hero
                 topMovie={topMovie} 
-                // movies={movies}
-                // popularMovies={popularMovies}
-            // myMovieURL={myMovieURL}
             />
       </Box>
     )

@@ -1,23 +1,35 @@
-import { FC, useEffect,useState } from "react";
+import { FC,useState,useRef } from "react";
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Movie from "../interfaces/movieInterface";
-import { Box, useTheme } from "@mui/material";
+import { Box, Grid, useTheme } from "@mui/material";
+import PlayCircleFilledTwoToneIcon from '@mui/icons-material/PlayCircleFilledTwoTone';
+import StarIcon from '@mui/icons-material/Star';
 
 
 interface miniCardInterface {
   movieCard: Movie,
+  typeMovie: number,
 }
 
 
 
-const MiniCard:FC<miniCardInterface> = ({movieCard}:miniCardInterface) =>{
+const MiniCard:FC<miniCardInterface> = ({movieCard,typeMovie}:miniCardInterface) =>{
+  const [isButtonVisible, setButtonVisible] = useState(false)
+  const containerRef = useRef();
 
-  let MovieCardURL="https://image.tmdb.org/t/p/w500"+ movieCard?.backdrop_path
+  let MovieCardURL
+  if(typeMovie == 1) {
+    MovieCardURL="https://image.tmdb.org/t/p/w500"+ movieCard?.backdrop_path
+  }else if (typeMovie == 2){
+    if(movieCard.title){
+      MovieCardURL="https://image.tmdb.org/t/p/w500"+ movieCard?.backdrop_path
+    }else{
+      MovieCardURL=movieCard?.backdrop_path
+    }
+    
+  }
   const theme = useTheme();
 
   const cardSX={
@@ -25,61 +37,111 @@ const MiniCard:FC<miniCardInterface> = ({movieCard}:miniCardInterface) =>{
     height:152,
     marginTop:2,
     marginBottom:1,
-    position:"relative",
-    [theme.breakpoints.down('md')]: {width:"100%",}
-
-    // backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`,
-
-    // overflow:"hidden"
+    [theme.breakpoints.down('md')]: {width:"70%",height:"180px",marginLeft:10,justifyContent:"center",textAlign:"center",alignItems:"center"},
   }
 
   const miniCardImageSX={
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition:"center center",
     backgroundSize:"100% 100%",
-    width:"100%",
-    maxWidth:"auto",
+    alignItems: "center",
+    justifyContent: "center",
+    height:152,
     maxHeight:"100%",
-    // display:"block"
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("${MovieCardURL}")`,
+    [theme.breakpoints.down('md')]: {width:"100%",height:"180px",justifyContent:"center",textAlign:"center",alignItems:"center"},
+    ':hover':{
+      opacity:0.8,
+      transition: "0.45s ease",
+      cursor: "pointer"
     }
+  }
+
   const titleSX={
     fontSize:"16px",
     letterSpacing:"4px",
     color:"white",
     textAlign:"center",
+    marginBottom:1
+  }
+
+  const cardContentBoxSX={
+    height:152,
+    justifyContent:"center",
+    textAlign:"center",
+  }
+  const playCircleSX={
+    color:"white",
+    ":hover" : {
+      color: (theme:any) => theme.palette.custom.main,
+      transition: "0.45s ease",
+      cursor: "pointer"
+    }
+  }
+
+  const averageSX={
+    fontSize:"14px",
+    lineHeight:"12px",
+    letterSpacing:"2px",
+    color:"white"
+  }
+
+  const starSX={
+    fontSize:"14px",
+    lineHeight:"12px",
+    letterSpacing:"2px",
+    marginBottom:10,
+    color: (theme:any) => theme.palette.custom.main,
   }
   return (
       <Card sx={cardSX}>
-        <CardMedia  sx={miniCardImageSX} image={MovieCardURL} >
-          <CardContent sx={{backgroundColor:"transparent",position:"relative"}} >
-          <Typography sx={titleSX} style={{display:"flex",alignItems:"flex-end",}} >
-              {movieCard?.original_title}
-            </Typography>
-            {/* <Typography sx={{color:"white"}} gutterBottom >
-              {popular?.vote_average}
-            </Typography>
-            <Typography sx={{color:"white"}} variant="body2" color="text.secondary">
-              {popular?.release_date ? popular?.release_date.substring(0,4) : null}
-            </Typography>  */}
-          </CardContent>
-        </CardMedia>
-        {/* <Box sx={miniCardImageSX}>
-
-        </Box> */}
-        {/* <img src={popularMovieURL} style={miniCardImageSX}>
-        </img>
-        <Box sx={{position:"relative",zIndex:3}}> 
-            <Typography sx={{color:"white"}} gutterBottom >
-              {popular?.original_title}
-            </Typography>
-            <Typography sx={{color:"white"}} gutterBottom >
-              {popular?.vote_average}
-            </Typography>
-            <Typography sx={{color:"white"}} variant="body2" color="text.secondary">
-              {popular?.release_date ? popular?.release_date.substring(0,4) : null}
-            </Typography> 
-        </Box> */}
+         <CardMedia  sx={miniCardImageSX}  >
+          <Box ref={containerRef} 
+            onMouseLeave={() => setButtonVisible(false)}>
+            <Box
+              onMouseEnter={() => setButtonVisible(true)}
+            >
+              {isButtonVisible ? 
+                <Box sx={cardContentBoxSX} style={{transition:"0.5s",}}>
+                  {/* MOBILE VIEW STARTS */}
+                  <Box sx={{  display: { xs: 'block', md: 'none',position:"relative",marginLeft:10 } }}>
+                    <Box sx={{display:"flex",paddingTop:5}}>
+                      <PlayCircleFilledTwoToneIcon sx={playCircleSX}  fontSize="large" ></PlayCircleFilledTwoToneIcon>
+                      <Typography sx={titleSX} style={{marginTop:5}} > {movieCard?.original_title} </Typography>
+                    </Box>
+                    <Box sx={{display:"flex",position:"absolute",paddingTop:5}}>
+                      <StarIcon sx={starSX}></StarIcon>
+                      <Typography sx={averageSX} style={{marginTop:2}}> {movieCard?.vote_average}</Typography>
+                      <Box sx={{marginLeft:30}}>
+                        <Typography sx={averageSX} style={{marginTop:2}}> {movieCard?.release_date?.substring(0,4)}</Typography>
+                      </Box>
+                      
+                    </Box>
+                  </Box>
+                  {/* MOBILE VIEW ENDS */}
+                  <Box sx={{  display: { xs: 'none', md: 'block' } }}>
+                    <Box sx={{display:"flex",flexDirection:"row",paddingTop:5}}>
+                      <PlayCircleFilledTwoToneIcon sx={playCircleSX} fontSize="large" ></PlayCircleFilledTwoToneIcon>
+                      <Typography sx={titleSX} style={{marginTop:5}}> {movieCard?.original_title}</Typography>
+                    </Box>
+                    <Box sx={{display:"flex",marginTop:1}}>
+                      <StarIcon sx={starSX}></StarIcon>
+                        <Typography sx={averageSX} style={{marginTop:2}}> {movieCard?.vote_average}</Typography>
+                      <Box sx={{marginLeft:18}}>
+                        <Typography sx={averageSX} style={{marginTop:2}}> {movieCard?.release_date?.substring(0,4)}</Typography>  
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+                : 
+                <Box sx={cardContentBoxSX}>
+                  <PlayCircleFilledTwoToneIcon sx={{marginTop:8,color:"white"}} fontSize="large" ></PlayCircleFilledTwoToneIcon>
+                  <Typography sx={titleSX} style={{transitionDelay: isButtonVisible ? "200ms ease-out" : "200ms"}} >{movieCard?.original_title}</Typography>
+                </Box>  
+                }  
+            </Box>
+          </Box>
+        </CardMedia> 
       </Card>
   );
 }

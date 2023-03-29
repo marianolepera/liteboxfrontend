@@ -64,7 +64,7 @@ const DropZone:FC<DropZoneInterface> =({handleImageReader,progress,resetProgress
     const rejectStyle = {
     borderColor: '#ff1744'
     };
-    const style = useMemo(() => ({
+    const style:any = useMemo(() => ({
     ...baseStyle,
     ...(isFocused ? focusedStyle : {}),
     ...(isDragAccept ? acceptStyle : {}),
@@ -93,7 +93,7 @@ const DropZone:FC<DropZoneInterface> =({handleImageReader,progress,resetProgress
             {progress == 100 && 
                 <Typography sx={{color:"white"}}>{progress} % CARGADO</Typography>
             }
-            <LinearProgress color="custom" variant="determinate" value={progress} />
+            <LinearProgress  sx={{color:()=>theme.palette.custom.main}} variant="determinate" value={progress} />
             {progress < 100 && 
                 <Typography sx={{color:"white",float:"right"}} onClick={resetProgress}> CANCELAR</Typography>
             }

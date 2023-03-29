@@ -107,7 +107,7 @@ export default function Modal({open,setOpen}:any) {
   };
 
   const handleImageReader = (files:any,fileRejected:any) => {
-    const fileReader = new FileReader();
+    const fileReader:any = new FileReader();
     fileReader.onerror = () => {
         setProgress(100)
         setIsError(true);

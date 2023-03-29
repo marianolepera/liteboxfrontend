@@ -49,4 +49,11 @@ declare module '@mui/material/Button' {
   }
 }
 
+declare module '@mui/material/LinearProgress' {
+  interface LineasProgressPropsColorOverrides {
+    custom: true;
+    modalButtom: true;
+  }
+}
+
 export default theme;
